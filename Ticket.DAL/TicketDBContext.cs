@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ticket.Entities;
+using Ticket.Entity.Entities;
 
 namespace Ticket.DAL
 {

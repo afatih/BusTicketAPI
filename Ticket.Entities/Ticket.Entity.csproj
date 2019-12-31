@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Ticket.DAL\Ticket.DAL.csproj" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ticket.DTO\Ticket.DTO.csproj" />
-    <ProjectReference Include="..\Ticket.Entities\Ticket.Entity.csproj" />
   </ItemGroup>
 
 </Project>

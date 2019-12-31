@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Core.DAL;
+using Core.DAL.SqlServer.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,7 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ticket.BLL.IServices;
+using Ticket.BLL.Services;
 using Ticket.DAL;
+using Ticket.Entity.Mapper;
 
 namespace Ticket.API
 {
@@ -29,6 +35,16 @@ namespace Ticket.API
         {
             services.AddDbContext<TicketDBContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
+            services.AddScoped<IUserService, UserService>();
+            var mappingConfiguration = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapping());
+            });
+            IMapper mapper = mappingConfiguration.CreateMapper();
+            services.AddSingleton(mapper);
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +60,13 @@ namespace Ticket.API
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseMvc(routes =>
+            {
+                routes
+                    .MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}")
+                    .MapRoute(name: "api", template: "api/{controller=User}/{action}/{id?}");
+            });
         }
     }
 }

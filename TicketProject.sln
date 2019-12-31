@@ -3,20 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.API", "Ticket.API\Ticket.API.csproj", "{AE6227B7-A634-4D8B-B633-BAF211365685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.API", "Ticket.API\Ticket.API.csproj", "{AE6227B7-A634-4D8B-B633-BAF211365685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.DAL", "Ticket.DAL\Ticket.DAL.csproj", "{CE341936-E4BA-4A26-BE12-242A4875FA28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.DAL", "Ticket.DAL\Ticket.DAL.csproj", "{CE341936-E4BA-4A26-BE12-242A4875FA28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.BLL", "Ticket.BLL\Ticket.BLL.csproj", "{7A99F981-FCEE-4C2A-B666-7E6ABE3514E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.BLL", "Ticket.BLL\Ticket.BLL.csproj", "{7A99F981-FCEE-4C2A-B666-7E6ABE3514E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.DTO", "Ticket.DTO\Ticket.DTO.csproj", "{C259A1DE-9E68-4747-AE2B-E67835300012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.DTO", "Ticket.DTO\Ticket.DTO.csproj", "{C259A1DE-9E68-4747-AE2B-E67835300012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Entities", "Ticket.Entities\Ticket.Entities.csproj", "{ACECFD49-51C4-4403-994A-C7233B83CF0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.Entity", "Ticket.Entities\Ticket.Entity.csproj", "{ACECFD49-51C4-4403-994A-C7233B83CF0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A8C32277-6BD1-46BF-95E5-1BE1F1A7C44F}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		global.json = global.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F5B80178-4A9D-45DA-8B9B-765B0D615AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +47,10 @@ Global
 		{ACECFD49-51C4-4403-994A-C7233B83CF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACECFD49-51C4-4403-994A-C7233B83CF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACECFD49-51C4-4403-994A-C7233B83CF0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B80178-4A9D-45DA-8B9B-765B0D615AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B80178-4A9D-45DA-8B9B-765B0D615AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B80178-4A9D-45DA-8B9B-765B0D615AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B80178-4A9D-45DA-8B9B-765B0D615AAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

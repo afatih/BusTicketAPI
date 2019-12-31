@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ticket.DTO\Ticket.DTO.csproj" />
-    <ProjectReference Include="..\Ticket.Entities\Ticket.Entities.csproj" />
+    <ProjectReference Include="..\Ticket.Entities\Ticket.Entity.csproj" />
   </ItemGroup>
 
 </Project>

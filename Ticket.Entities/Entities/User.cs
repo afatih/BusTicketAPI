@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ticket.Entities
+namespace Ticket.Entity.Entities
 {
     public class User
     {

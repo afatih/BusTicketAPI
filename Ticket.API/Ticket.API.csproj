@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
@@ -17,13 +21,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Ticket.BLL\Ticket.BLL.csproj" />
     <ProjectReference Include="..\Ticket.DAL\Ticket.DAL.csproj" />
     <ProjectReference Include="..\Ticket.DTO\Ticket.DTO.csproj" />
-    <ProjectReference Include="..\Ticket.Entities\Ticket.Entities.csproj" />
+    <ProjectReference Include="..\Ticket.Entities\Ticket.Entity.csproj" />
   </ItemGroup>
 
 </Project>
