@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Ticket.BLL.IServices;
+using Ticket.DAL;
 
 namespace Ticket.API
 {
@@ -14,7 +17,27 @@ namespace Ticket.API
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+           var host = CreateWebHostBuilder(args).Build();
+
+            //Initialize db.
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    //var dbInitializer = services.GetRequiredService<ISeedDataService>();
+                    //dbInitializer.Initialize().GetAwaiter().GetResult();
+                }
+                catch (Exception e)
+                {
+
+                    var message = e;
+                }
+            }
+
+            host.Run();
+
+           
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

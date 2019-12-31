@@ -9,8 +9,8 @@ using Ticket.DAL;
 namespace Ticket.DAL.Migrations
 {
     [DbContext(typeof(TicketDBContext))]
-    [Migration("20191231074522_TestMigration")]
-    partial class TestMigration
+    [Migration("20191231175730_EmailRequiredAdded")]
+    partial class EmailRequiredAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace Ticket.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Ticket.Entities.User", b =>
+            modelBuilder.Entity("Ticket.Entity.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -28,15 +28,26 @@ namespace Ticket.DAL.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<bool>("IsActive");
 
+                    b.Property<string>("Name");
+
                     b.Property<string>("Password");
+
+                    b.Property<string>("Surname");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, Email = "test1@gmail.com", IsActive = true, Name = "test1", Password = "test", Surname = "testSoyad" },
+                        new { Id = 2, Email = "test2@gmail.com", IsActive = true, Name = "test2", Password = "test", Surname = "testSoyad" },
+                        new { Id = 3, Email = "test3@gmail.com", IsActive = true, Name = "test3", Password = "test", Surname = "testSoyad" }
+                    );
                 });
 #pragma warning restore 612, 618
         }

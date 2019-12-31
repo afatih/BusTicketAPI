@@ -37,6 +37,7 @@ namespace Ticket.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISeedDataService, SeedDataService>();
             var mappingConfiguration = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapping());

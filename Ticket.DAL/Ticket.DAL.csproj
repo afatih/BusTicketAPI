@@ -5,21 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191231091239_TestMigration3.cs" />
-    <Compile Remove="Migrations\20191231091239_TestMigration3.Designer.cs" />
-    <Compile Remove="Migrations\20191231091929_MigrationAddName1.cs" />
-    <Compile Remove="Migrations\20191231091929_MigrationAddName1.Designer.cs" />
-    <Compile Remove="Migrations\20191231092211_MigrationAddName2.cs" />
-    <Compile Remove="Migrations\20191231092211_MigrationAddName2.Designer.cs" />
-    <Compile Remove="Migrations\20191231092758_SurnameAdded.cs" />
-    <Compile Remove="Migrations\20191231092758_SurnameAdded.Designer.cs" />
-    <Compile Remove="Migrations\20191231092923_SurnameAdded.cs" />
-    <Compile Remove="Migrations\20191231092923_SurnameAdded.Designer.cs" />
-    <Compile Remove="Migrations\20191231093209_SurnameAdded.cs" />
-    <Compile Remove="Migrations\20191231093209_SurnameAdded.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4">

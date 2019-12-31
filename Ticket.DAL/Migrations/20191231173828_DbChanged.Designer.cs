@@ -9,8 +9,8 @@ using Ticket.DAL;
 namespace Ticket.DAL.Migrations
 {
     [DbContext(typeof(TicketDBContext))]
-    [Migration("20191231093335_AddNameSurname")]
-    partial class AddNameSurname
+    [Migration("20191231173828_DbChanged")]
+    partial class DbChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace Ticket.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Ticket.Entities.User", b =>
+            modelBuilder.Entity("Ticket.Entity.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -11,8 +11,7 @@ namespace Ticket.Entity.Mapper
     {
         public AutoMapping()
         {
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

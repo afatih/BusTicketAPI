@@ -11,6 +11,7 @@ namespace Ticket.BLL.IServices
     {
         IEnumerable<UserDTO> Get();
         UserDTO Get(int id);
+        UserDTO Get(UserLoginDTO dto);
         ServiceResult Add(UserDTO dto);
 
     }

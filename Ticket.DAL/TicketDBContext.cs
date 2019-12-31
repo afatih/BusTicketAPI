@@ -18,5 +18,14 @@ namespace Ticket.DAL
         {
          
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(
+                new User() { Id=1, Name = "test1", Email = "test1@gmail.com", Password = "test", IsActive = true, Surname = "testSoyad" },
+                new User() { Id = 2, Name = "test2", Email = "test2@gmail.com", Password = "test", IsActive = true, Surname = "testSoyad" },
+                new User() { Id = 3, Name = "test3", Email = "test3@gmail.com", Password = "test", IsActive = true, Surname = "testSoyad" }
+                );
+        }
     }
 }

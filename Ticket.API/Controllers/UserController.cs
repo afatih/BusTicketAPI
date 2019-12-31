@@ -10,7 +10,7 @@ namespace Ticket.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController:Controller
+    public class UserController : Controller
     {
         IUserService _userService;
         public UserController(IUserService userService)
@@ -22,6 +22,17 @@ namespace Ticket.API.Controllers
         public  IEnumerable<UserDTO> Get()
         {
             return  _userService.Get();
+        }
+
+        [HttpGet]
+        [Route("get")]
+        public IActionResult Get(UserLoginDTO dto)
+        {
+            if (dto==null)
+            {
+                return BadRequest();
+            }
+            return Ok(_userService.Get(dto));
         }
 
         // POST api/values

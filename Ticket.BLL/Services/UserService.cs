@@ -3,6 +3,7 @@ using Core.DAL;
 using Core.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ticket.BLL.IServices;
@@ -39,6 +40,13 @@ namespace Ticket.BLL.Services
             var userEntitiy = _mapper.Map<User>(dto);
             _uow.GetRepository<User>().Add(userEntitiy);
             return _uow.Save();
+        }
+
+        public UserDTO Get(UserLoginDTO dto)
+        {
+            var user = _repository.Get(x => x.Email == dto.Email && x.Password == dto.Password).SingleOrDefault();
+            var userDto = _mapper.Map<UserDTO>(user);
+            return userDto;
         }
     }
 }
