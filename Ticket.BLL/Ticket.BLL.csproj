@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ticket.DAL\Ticket.DAL.csproj" />
+    <ProjectReference Include="..\Ticket.DTO\Ticket.DTO.csproj" />
+    <ProjectReference Include="..\Ticket.Entities\Ticket.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
