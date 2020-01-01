@@ -23,26 +23,30 @@ namespace Core.DAL.SqlServer.EntityFramework
             return new Repository<TEntity>(_dbContext);
         }
 
-        public ServiceResult Save()
+        public int Save()
         {
             int ess = 0;
-            try
-            {
-                ess = _dbContext.SaveChanges();
-                if (ess > 0)
-                {
-                    return new ServiceResult(ProcessStateEnum.Success, "İşlem başarılı");
-                }
-                else
-                {
-                    return new ServiceResult(ProcessStateEnum.Warning, "İşlem başarısız");
-                }
+            ess = _dbContext.SaveChanges();
+            return ess;
 
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult(ProcessStateEnum.Error, ex.Message);
-            }
+
+            //try
+            //{
+            //    ess = _dbContext.SaveChanges();
+            //    if (ess > 0)
+            //    {
+            //        return new ServiceResult(ProcessStateEnum.Success, "İşlem başarılı");
+            //    }
+            //    else
+            //    {
+            //        return new ServiceResult(ProcessStateEnum.Warning, "İşlem başarısız");
+            //    }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return new ServiceResult(ProcessStateEnum.Error, ex.Message);
+            //}
         }
 
         public ServiceResult _Save()

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Ticket.BLL.IServices;
 using Ticket.DTO;
 using Ticket.Entity.Entities;
+using Ticket.Helpers;
 
 namespace Ticket.BLL.Services
 {
@@ -32,14 +33,23 @@ namespace Ticket.BLL.Services
 
         public UserDTO Get(int id)
         {
-            throw new NotImplementedException();
+            var user = _repository.Get(x=>x.Id==id).SingleOrDefault();
+            var userDto = _mapper.Map<UserDTO>(user);
+            return userDto;
         }
 
-        public ServiceResult Add(UserDTO dto)
+        public UserDTO Create(UserDTO dto)
         {
+            // validation
+            if (string.IsNullOrWhiteSpace(dto.Password) || string.IsNullOrWhiteSpace(dto.Email))
+                throw new AppException("Password is required");
+
+
+
             var userEntitiy = _mapper.Map<User>(dto);
             _uow.GetRepository<User>().Add(userEntitiy);
-            return _uow.Save();
+            _uow.Save();
+            return dto;
         }
 
         public UserDTO Get(UserLoginDTO dto)
@@ -47,6 +57,19 @@ namespace Ticket.BLL.Services
             var user = _repository.Get(x => x.Email == dto.Email && x.Password == dto.Password).SingleOrDefault();
             var userDto = _mapper.Map<UserDTO>(user);
             return userDto;
+        }
+
+        public UserDTO Authenticate(string email, string password)
+        {
+            if (string.IsNullOrEmpty(email)||string.IsNullOrEmpty(password))
+                return null;
+            var user = _repository.Get(x => x.Email == email && x.Password == password).SingleOrDefault();
+
+            if (user == null)
+                return null;
+
+            return _mapper.Map<UserDTO>(user);
+
         }
     }
 }

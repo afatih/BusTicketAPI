@@ -9,7 +9,7 @@ namespace Core.DAL
 {
     public interface IUnitOfWork
     {
-        ServiceResult Save();
+        int Save();
         IRepository<TEntity> GetRepository<TEntity>() where TEntity:class,new(); //factory pattern
         
     }

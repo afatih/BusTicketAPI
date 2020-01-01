@@ -9,10 +9,13 @@ namespace Ticket.BLL.IServices
 {
     public interface IUserService
     {
+        UserDTO Authenticate(string email, string password);
         IEnumerable<UserDTO> Get();
         UserDTO Get(int id);
         UserDTO Get(UserLoginDTO dto);
-        ServiceResult Add(UserDTO dto);
+        UserDTO Create(UserDTO dto);
+
+
 
     }
 }
