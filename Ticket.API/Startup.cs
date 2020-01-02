@@ -40,8 +40,11 @@ namespace Ticket.API
         {
             services.AddDbContext<TicketDBContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddScoped(typeof(IUnitOfWork),typeof(UnitOfWork));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITourService, TourService>();
+
             var mappingConfiguration = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapping());

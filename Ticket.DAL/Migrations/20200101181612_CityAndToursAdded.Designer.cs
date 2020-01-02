@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ticket.DAL;
 
 namespace Ticket.DAL.Migrations
 {
     [DbContext(typeof(TicketDBContext))]
-    partial class TicketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200101181612_CityAndToursAdded")]
+    partial class CityAndToursAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,18 +65,18 @@ namespace Ticket.DAL.Migrations
                     b.ToTable("Tours");
 
                     b.HasData(
-                        new { Id = 1, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "16:00", To = "Ankara", UserCount = 30 },
-                        new { Id = 2, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "17:00", To = "Ankara", UserCount = 44 },
-                        new { Id = 3, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "18:00", To = "Ankara", UserCount = 20 },
-                        new { Id = 4, Date = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "16:00", To = "Ankara", UserCount = 20 },
-                        new { Id = 5, Date = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "18:00", To = "Ankara", UserCount = 20 },
-                        new { Id = 6, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "16:00", To = "İzmir", UserCount = 30 },
-                        new { Id = 7, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "17:00", To = "İzmir", UserCount = 44 },
-                        new { Id = 8, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "18:00", To = "İzmir", UserCount = 1 },
-                        new { Id = 9, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 30 },
-                        new { Id = 10, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 44 },
-                        new { Id = 11, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 1 },
-                        new { Id = 12, Date = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 5 }
+                        new { Id = 1, Date = new DateTime(2020, 1, 1, 21, 16, 12, 32, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "16:00", To = "Ankara", UserCount = 30 },
+                        new { Id = 2, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "17:00", To = "Ankara", UserCount = 44 },
+                        new { Id = 3, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "18:00", To = "Ankara", UserCount = 20 },
+                        new { Id = 4, Date = new DateTime(2020, 1, 2, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "16:00", To = "Ankara", UserCount = 20 },
+                        new { Id = 5, Date = new DateTime(2020, 1, 2, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 50, Time = "18:00", To = "Ankara", UserCount = 20 },
+                        new { Id = 6, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "16:00", To = "İzmir", UserCount = 30 },
+                        new { Id = 7, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "17:00", To = "İzmir", UserCount = 44 },
+                        new { Id = 8, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İstanbul", Price = 30, Time = "18:00", To = "İzmir", UserCount = 1 },
+                        new { Id = 9, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 30 },
+                        new { Id = 10, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 44 },
+                        new { Id = 11, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 1 },
+                        new { Id = 12, Date = new DateTime(2020, 1, 1, 21, 16, 12, 33, DateTimeKind.Local), From = "İzmir", Price = 20, Time = "16:00", To = "Ankara", UserCount = 5 }
                     );
                 });
 

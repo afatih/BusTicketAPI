@@ -12,6 +12,8 @@ namespace Ticket.Entity.Mapper
         public AutoMapping()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<Tour, TourDto>().ReverseMap();
+            CreateMap<City, CityDto>().ReverseMap();
         }
     }
 }
