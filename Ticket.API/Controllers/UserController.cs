@@ -15,6 +15,7 @@ using Ticket.Helpers;
 
 namespace Ticket.API.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
     public class UserController : Controller
@@ -35,6 +36,12 @@ namespace Ticket.API.Controllers
             var user = _userService.Authenticate(userDto.Email, userDto.Password);
             if (user==null)
                 return BadRequest(new { message = "Username or password is incorrect" });
+
+            if (!user.IsActive)
+                return BadRequest(new { message = "Please activate your account by e-mail to your mailbox" });
+
+            
+
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

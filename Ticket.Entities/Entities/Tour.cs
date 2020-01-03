@@ -13,5 +13,7 @@ namespace Ticket.Entity.Entities
         public int Price { get; set; }
         public int UserCount { get; set; }
         public string Time { get; set; }
+
+
     }
 }

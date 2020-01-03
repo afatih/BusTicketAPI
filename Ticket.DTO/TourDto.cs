@@ -13,6 +13,22 @@ namespace Ticket.DTO
         public int Price { get; set; }
         public int UserCount { get; set; }
         public string Time { get; set; }
+        public bool IsAvailable
+        {
+            get
+            {
+                return UserCount >= 44 ? false : true;
+            }
+        }
+        public string buttonText
+        {
+
+            get
+            {
+                return UserCount >= 44 ? "Dolu" : "Seç";
+            }
+        }
+
 
     }
 }

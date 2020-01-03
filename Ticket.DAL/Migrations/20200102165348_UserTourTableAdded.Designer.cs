@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ticket.DAL;
 
 namespace Ticket.DAL.Migrations
 {
     [DbContext(typeof(TicketDBContext))]
-    partial class TicketDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200102165348_UserTourTableAdded")]
+    partial class UserTourTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

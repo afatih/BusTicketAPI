@@ -11,5 +11,11 @@ namespace Ticket.BLL.IServices
 
         IEnumerable<TourDto> GetTours(TourSelectDto dto);
 
+        TourDto GetTourDetail(int id);
+
+        int AddTourToUser(UserTourDto dto);
+
+        IEnumerable<TourDto> GetUserTours(int id);
+
     }
 }

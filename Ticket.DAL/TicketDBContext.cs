@@ -15,6 +15,7 @@ namespace Ticket.DAL
         public DbSet<User> Users{ get; set; }
         public DbSet<City> Cities{ get; set; }
         public DbSet<Tour> Tours{ get; set; }
+        public DbSet<UserTour> UserTours{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
