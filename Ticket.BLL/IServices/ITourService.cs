@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Ticket.DTO;
+using Ticket.Entity.Entities;
 
 namespace Ticket.BLL.IServices
 {
@@ -15,7 +16,11 @@ namespace Ticket.BLL.IServices
 
         int AddTourToUser(UserTourDto dto);
 
-        IEnumerable<TourDto> GetUserTours(int id);
+        IEnumerable<UserToursDetailDto> GetUserTours(int id);
+
+        int DeleteUserTour(int id,int tourId);
+
+ 
 
     }
 }

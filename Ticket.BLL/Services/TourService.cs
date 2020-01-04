@@ -46,15 +46,30 @@ namespace Ticket.BLL.Services
 
         public int AddTourToUser(UserTourDto dto)
         {
-            _userTourRepository.Add(_mapper.Map<UserTour>(dto));
-            return _uow.Save();
+             _userTourRepository.Add(_mapper.Map<UserTour>(dto));
+
+            var result1 = _uow.Save();
+            var result2 = 0;
+
+            if (result1>0)
+            {
+                var tour = _tourRepository.Get(x => x.Id == dto.TourId).SingleOrDefault();
+                tour.UserCount +=1 ;
+                _tourRepository.Update(tour);
+                result2 = _uow.Save();
+            }
+
+            if (result1 > 0 && result2 > 0)
+                return 1;
+            else
+                return 0;
 
         }
 
-        public IEnumerable<TourDto> GetUserTours(int id)
+        public IEnumerable<UserToursDetailDto> GetUserTours(int id)
         {
-            List<TourDto> tours = new List<TourDto>();
-            var userTours = _userTourRepository.Get(x => x.Id>=0);
+            List<UserToursDetailDto> tours = new List<UserToursDetailDto>();
+            var userTours = _userTourRepository.Get(x => x.UserId==id);
 
             if (userTours == null)
                 return null;
@@ -65,11 +80,40 @@ namespace Ticket.BLL.Services
             foreach (UserTour item in userTours)
             {
                 var tour = _tourRepository.Get(x => x.Id == item.TourId).SingleOrDefault();
-                var tourDto = _mapper.Map<TourDto>(tour);
-                tours.Add(tourDto);
+                var userTour = _mapper.Map<UserToursDetailDto>(tour);
+                userTour.UserTourId = item.Id;
+                tours.Add(userTour);
             }
             return tours.AsEnumerable();
             
+        }
+
+
+        
+        public int DeleteUserTour(int id,int tourId)
+        {
+
+            _userTourRepository.HardDelete(x=>x.Id==id);
+            
+            var result1 = _uow.Save();
+            var result2 = 0;
+
+            if (result1 != 0)
+            {
+                var deletedTour = _tourRepository.Get(x => x.Id == tourId).SingleOrDefault();
+                if (deletedTour!=null)
+                {
+                    deletedTour.UserCount -= 1;
+                }
+
+                result2 = _uow.Save();
+            }
+
+            if (result1 > 0 && result2 > 0)
+                return 1;
+            else
+                return 0;
+
         }
     }
 }

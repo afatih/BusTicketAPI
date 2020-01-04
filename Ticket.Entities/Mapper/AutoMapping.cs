@@ -13,6 +13,7 @@ namespace Ticket.Entity.Mapper
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Tour, TourDto>().ReverseMap();
+            CreateMap<Tour, UserToursDetailDto>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<UserTour, UserTourDto>().ReverseMap();
         }

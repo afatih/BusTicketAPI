@@ -69,6 +69,8 @@ namespace Ticket.API.Controllers
         [Route("add")]
         public IActionResult AddTourToUser([FromBody] UserTourDto dto) 
         {
+      
+
             if (!ModelState.IsValid)
                 return BadRequest();
 
@@ -83,7 +85,7 @@ namespace Ticket.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex });
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -99,6 +101,29 @@ namespace Ticket.API.Controllers
 
             return Ok(tours);
         }
+
+
+        [HttpDelete]
+        public IActionResult DeleteUserTour([FromBody] DeleteTourRequestDto dto)
+        {
+            if (dto.userTourId == 0 || dto.tourId == 0)
+                return BadRequest();
+            try
+            {
+                var result = _tourService.DeleteUserTour(dto.userTourId, dto.tourId);
+                if (result > 0)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            catch (Exception e)
+            {
+
+                return NotFound(new { message = e });
+            }
+        }
+
+
 
 
 
