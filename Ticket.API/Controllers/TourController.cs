@@ -10,7 +10,7 @@ using Ticket.DTO;
 
 namespace Ticket.API.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class TourController : Controller
@@ -21,6 +21,7 @@ namespace Ticket.API.Controllers
         {
             _tourService = tourService;
         }
+
 
         [HttpGet]
         [Route("cities")]

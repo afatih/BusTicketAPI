@@ -51,20 +51,43 @@ namespace Ticket.BLL.Services
             {
                 if (usersBySelectedEmail.Count>0)
                 {
+                    if (!usersBySelectedEmail.FirstOrDefault().IsActive)
+                    {
+                        throw new AppException("Bu mail adresi için bir aktivasyon linki gönderilmiştir lütfen mail adresinizi kontrol ediniz");
+                    }
                     throw new AppException("Bu e-mail adresi ile kayıtlı bir hesap vardır lütfen başka bir e-mail adresi giriniz.");
                 }
             }
 
-            var userEntitiy = _mapper.Map<User>(dto);
-            _userRepository.Add(userEntitiy);
-            _uow.Save();
-            
+            using(var transaction = _uow.BeginTransaction())
+            {
+                try
+                {
+                    var userEntitiy = _mapper.Map<User>(dto);
+                    _userRepository.Add(userEntitiy);
+                    _uow.Save();
 
 
-            string guidId = Guid.NewGuid().ToString();
-            var userKey = new UserKey() { Email = dto.Email, ActivationKey = guidId };
-            _userKeyRepository.Add(userKey);
-            _uow.Save();
+                
+
+                    string guidId = Guid.NewGuid().ToString();
+                    var userKey = new UserKey() { Email = dto.Email, ActivationKey = guidId };
+                    _userKeyRepository.Add(userKey);
+                    _uow.Save();
+
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    throw new AppException("Kullanıcı kayıt olurken beklenmedik bir hata ile karşılaşıldı");
+                  
+                }
+               
+
+            }
+
+          
 
 
 
@@ -91,5 +114,23 @@ namespace Ticket.BLL.Services
             return _mapper.Map<UserDTO>(user);
 
         }
+
+        public UserDTO ActivateUser(string key)
+        {
+            var userKey = _userKeyRepository.Get(x => x.ActivationKey == key).SingleOrDefault();
+            if (userKey == null)
+                return null;
+
+            var user = _userRepository.Get(x => x.Email.ToLower() == userKey.Email.ToLower()).SingleOrDefault();
+            if (user == null)
+                return null;
+
+            user.IsActive =true;
+
+            _userRepository.Update(user);
+            _uow.Save();
+
+            return _mapper.Map<UserDTO>(user);
+        }   
     }
 }

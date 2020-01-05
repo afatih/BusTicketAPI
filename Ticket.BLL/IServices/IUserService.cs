@@ -14,6 +14,7 @@ namespace Ticket.BLL.IServices
         UserDTO Get(int id);
         UserDTO Get(UserLoginDTO dto);
         UserDTO Create(UserDTO dto);
+        UserDTO ActivateUser(string key);
 
 
 

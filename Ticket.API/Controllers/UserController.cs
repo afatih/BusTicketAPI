@@ -15,7 +15,7 @@ using Ticket.Helpers;
 
 namespace Ticket.API.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : Controller
@@ -57,6 +57,9 @@ namespace Ticket.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
+
+
+
             // return basic user info (without password) and token to store client side
             return Ok(new
             {
@@ -87,7 +90,58 @@ namespace Ticket.API.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpPost("activation")]
+        public IActionResult ActivateUser([FromBody] ActivationKeyRequest activation)
+        {
+            if (activation == null)
+                return BadRequest();
+            
+            if(string.IsNullOrEmpty(activation.ActivationKey))
+                return BadRequest();
 
+            try
+            {
+                var user = _userService.ActivateUser(activation.ActivationKey);
+                if (user == null)
+                    return NotFound(new { message= "Bu aktivasyon anahtarıyla kayıtlı bir user bulunmamaktadır." } );
+
+
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name,user.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+
+
+
+                // return basic user info (without password) and token to store client side
+                return Ok(new
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Email = user.Email,
+                    IsActive = user.IsActive,
+                    Token = tokenString
+                });
+            }
+            catch (Exception ex )
+            {
+                return BadRequest(ex.Message);
+            }       
+        }   
+ 
 
 
 
@@ -110,11 +164,6 @@ namespace Ticket.API.Controllers
             return Ok(_userService.Get(dto));
         }
 
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] UserDTO user)
-        //{
-        //    _userService.Add(user);
-        //}
+
     }
 }

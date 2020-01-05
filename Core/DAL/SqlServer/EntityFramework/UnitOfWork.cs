@@ -1,4 +1,5 @@
-﻿using Core.Results;
+﻿using Core.Exceptions;
+using Core.Results;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -18,6 +19,12 @@ namespace Core.DAL.SqlServer.EntityFramework
         {
             _dbContext = dbContext;
         }
+
+        public IDataBaseTransaction BeginTransaction()
+        {
+            return new EntityDatabaseTransaction(_dbContext);
+        }
+
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, new()
         {
             return new Repository<TEntity>(_dbContext);
@@ -25,28 +32,24 @@ namespace Core.DAL.SqlServer.EntityFramework
 
         public int Save()
         {
-            int ess = 0;
-            ess = _dbContext.SaveChanges();
-            return ess;
+            int ess;
+            try
+            {
+                ess = _dbContext.SaveChanges();
+                if (ess > 0)
+                {
+                    return ess;
+                }
+                else
+                {
+                    throw new AppException("İşlem başarısız");
+                }
 
-
-            //try
-            //{
-            //    ess = _dbContext.SaveChanges();
-            //    if (ess > 0)
-            //    {
-            //        return new ServiceResult(ProcessStateEnum.Success, "İşlem başarılı");
-            //    }
-            //    else
-            //    {
-            //        return new ServiceResult(ProcessStateEnum.Warning, "İşlem başarısız");
-            //    }
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    return new ServiceResult(ProcessStateEnum.Error, ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw new AppException(ex.Message);
+            }
         }
 
         public ServiceResult _Save()

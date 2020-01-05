@@ -11,6 +11,7 @@ namespace Core.DAL
     {
         int Save();
         IRepository<TEntity> GetRepository<TEntity>() where TEntity:class,new(); //factory pattern
-        
+
+        IDataBaseTransaction BeginTransaction();
     }
 }
