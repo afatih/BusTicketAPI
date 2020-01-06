@@ -15,5 +15,6 @@ namespace Ticket.Entity.Entities
         public string Time { get; set; }
 
 
+
     }
 }

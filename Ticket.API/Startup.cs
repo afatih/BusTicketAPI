@@ -108,6 +108,8 @@ namespace Ticket.API
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

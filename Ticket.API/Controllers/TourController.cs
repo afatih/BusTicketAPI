@@ -58,10 +58,18 @@ namespace Ticket.API.Controllers
             if (id==0)
                 return BadRequest();
 
-            var tour = _tourService.GetTourDetail(id);
-
-            if (tour==null)
-                return NotFound(new { message = "Seçilen sefer bulunamamaktadır" });
+            TourDto tour ;
+            try
+            {
+                tour = _tourService.GetTourDetail(id);
+                if (tour == null)
+                    return NotFound(new { message = "Seçilen sefer bulunamamaktadır" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+           
 
             return Ok(tour);
         }

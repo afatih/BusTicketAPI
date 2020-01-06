@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.DAL;
+using Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +42,19 @@ namespace Ticket.BLL.Services
         public TourDto GetTourDetail(int id)
         {
             var tour = _tourRepository.Get(x => x.Id == id).SingleOrDefault();
+            if (tour.UserCount >= 44)
+            {
+                throw new AppException("Seçili seferde ki kişi sayısı dolmuştur");
+            }
             return _mapper.Map<TourDto>(tour);
         }
 
         public int AddTourToUser(UserTourDto dto)
         {
-             _userTourRepository.Add(_mapper.Map<UserTour>(dto));
+           
+           
+
+            _userTourRepository.Add(_mapper.Map<UserTour>(dto));
 
             var result1 = _uow.Save();
             var result2 = 0;
