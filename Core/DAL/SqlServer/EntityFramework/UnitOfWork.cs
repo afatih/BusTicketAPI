@@ -38,11 +38,13 @@ namespace Core.DAL.SqlServer.EntityFramework
                 ess = _dbContext.SaveChanges();
                 if (ess > 0)
                 {
+
                     return ess;
+
                 }
                 else
                 {
-                    throw new AppException("İşlem başarısız");
+                    throw new AppException("Hiçbir değişiklik yapılmadı.");
                 }
 
             }

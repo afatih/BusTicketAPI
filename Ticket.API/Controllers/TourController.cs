@@ -85,11 +85,7 @@ namespace Ticket.API.Controllers
 
             try
             {
-                var result = _tourService.AddTourToUser(dto);
-                if (result == 0)
-                    return BadRequest(new { message="Bilet alma işlemi gerçekleştirilemedi" });
-
-
+                _tourService.AddTourToUser(dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -119,16 +115,14 @@ namespace Ticket.API.Controllers
                 return BadRequest();
             try
             {
-                var result = _tourService.DeleteUserTour(dto.userTourId, dto.tourId);
-                if (result > 0)
-                    return Ok();
-                else
-                    return BadRequest();
+                _tourService.DeleteUserTour(dto.userTourId, dto.tourId);
+                return Ok();
+                
             }
             catch (Exception e)
             {
 
-                return NotFound(new { message = e });
+                return BadRequest(new { message = e });
             }
         }
 

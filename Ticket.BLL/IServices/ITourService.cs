@@ -14,11 +14,11 @@ namespace Ticket.BLL.IServices
 
         TourDto GetTourDetail(int id);
 
-        int AddTourToUser(UserTourDto dto);
+        void AddTourToUser(UserTourDto dto);
 
         IEnumerable<UserToursDetailDto> GetUserTours(int id);
 
-        int DeleteUserTour(int id,int tourId);
+        void DeleteUserTour(int id,int tourId);
 
  
 

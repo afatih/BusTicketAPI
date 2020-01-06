@@ -35,7 +35,7 @@ namespace Ticket.BLL.Services
 
         public IEnumerable<TourDto> GetTours(TourSelectDto dto)
         {
-            var tours = _tourRepository.Get(x => x.From == dto.From && x.To == dto.To /*&& x.Date == dto.Date*/);
+            var tours = _tourRepository.Get(x => x.From == dto.From && x.To == dto.To && x.Date == dto.Date);
             return _mapper.Map<IEnumerable<TourDto>>(tours);
         }
 
@@ -49,28 +49,53 @@ namespace Ticket.BLL.Services
             return _mapper.Map<TourDto>(tour);
         }
 
-        public int AddTourToUser(UserTourDto dto)
+        public void AddTourToUser(UserTourDto dto)
         {
-           
-           
 
-            _userTourRepository.Add(_mapper.Map<UserTour>(dto));
-
-            var result1 = _uow.Save();
-            var result2 = 0;
-
-            if (result1>0)
+            using (var transaction = _uow.BeginTransaction())
             {
-                var tour = _tourRepository.Get(x => x.Id == dto.TourId).SingleOrDefault();
-                tour.UserCount +=1 ;
-                _tourRepository.Update(tour);
-                result2 = _uow.Save();
-            }
+                try
+                {
+                    //User Tour tablosuna kullanıcı id ve tour id bilgileri işlendi
+                    _userTourRepository.Add(_mapper.Map<UserTour>(dto));
+                    _uow.Save();
 
-            if (result1 > 0 && result2 > 0)
-                return 1;
-            else
-                return 0;
+
+                    //tour tablosunda ki userCount sayısı 1 adet arttırıldı.
+                    var tour = _tourRepository.Get(x => x.Id == dto.TourId).SingleOrDefault();
+                    tour.UserCount += 1;
+                    _tourRepository.Update(tour);
+                    _uow.Save();
+
+                    transaction.Commit();
+
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    throw new AppException(e.Message);
+                }
+            }
+           
+           
+
+            //_userTourRepository.Add(_mapper.Map<UserTour>(dto));
+
+            //var result1 = _uow.Save();
+            //var result2 = 0;
+
+            //if (result1>0)
+            //{
+            //    var tour = _tourRepository.Get(x => x.Id == dto.TourId).SingleOrDefault();
+            //    tour.UserCount +=1 ;
+            //    _tourRepository.Update(tour);
+            //    result2 = _uow.Save();
+            //}
+
+            //if (result1 > 0 && result2 > 0)
+            //    return 1;
+            //else
+            //    return 0;
 
         }
 
@@ -98,29 +123,57 @@ namespace Ticket.BLL.Services
 
 
         
-        public int DeleteUserTour(int id,int tourId)
+        public void DeleteUserTour(int id,int tourId)
         {
 
-            _userTourRepository.HardDelete(x=>x.Id==id);
-            
-            var result1 = _uow.Save();
-            var result2 = 0;
 
-            if (result1 != 0)
+            using (var transaction = _uow.BeginTransaction())
             {
-                var deletedTour = _tourRepository.Get(x => x.Id == tourId).SingleOrDefault();
-                if (deletedTour!=null)
+                try
                 {
-                    deletedTour.UserCount -= 1;
-                }
+                    //UserTour  tablosundan seçili kayıt silindi
+                    _userTourRepository.HardDelete(x => x.Id == id);
+                    _uow.Save();
 
-                result2 = _uow.Save();
+                    //Tour tablosunda o tura ait userCount sayısı 1 azaltıldı
+                    var deletedTour = _tourRepository.Get(x => x.Id == tourId).SingleOrDefault();
+                    if (deletedTour != null)
+                    {
+                        deletedTour.UserCount -= 1;
+                    }
+                    _uow.Save();
+
+                    transaction.Commit();
+
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new AppException(ex.Message);
+                }
             }
 
-            if (result1 > 0 && result2 > 0)
-                return 1;
-            else
-                return 0;
+
+            //        _userTourRepository.HardDelete(x=>x.Id==id);
+            
+            //var result1 = _uow.Save();
+            //var result2 = 0;
+
+            //if (result1 != 0)
+            //{
+            //    var deletedTour = _tourRepository.Get(x => x.Id == tourId).SingleOrDefault();
+            //    if (deletedTour!=null)
+            //    {
+            //        deletedTour.UserCount -= 1;
+            //    }
+
+            //    result2 = _uow.Save();
+            //}
+
+            //if (result1 > 0 && result2 > 0)
+            //    return 1;
+            //else
+            //    return 0;
 
         }
     }

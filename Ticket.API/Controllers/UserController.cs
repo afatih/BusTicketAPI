@@ -35,10 +35,10 @@ namespace Ticket.API.Controllers
         {
             var user = _userService.Authenticate(userDto.Email, userDto.Password);
             if (user==null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Email ya da şifre hatalı." });
 
             if (!user.IsActive)
-                return BadRequest(new { message = "Please activate your account by e-mail to your mailbox" });
+                return BadRequest(new { message = "Hesabınızı aktif etmek için lütfen email hesabınıza gönderilen aktivasyon linkine tıklayınız." });
 
             
 
@@ -104,7 +104,7 @@ namespace Ticket.API.Controllers
             {
                 var user = _userService.ActivateUser(activation.ActivationKey);
                 if (user == null)
-                    return NotFound(new { message= "Bu aktivasyon anahtarıyla kayıtlı bir user bulunmamaktadır." } );
+                    return NotFound(new { message= "Bu aktivasyon anahtarıyla kayıtlı bir kullanıcı bulunmamaktadır." } );
 
 
 
