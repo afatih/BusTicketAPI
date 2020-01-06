@@ -141,29 +141,6 @@ namespace Ticket.API.Controllers
                 return BadRequest(ex.Message);
             }       
         }   
- 
-
-
-
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            //return BadRequest(new { message = "Username or password is incorrect" });
-            return Ok(_userService.Get());
-        }
-
-        [HttpGet]
-        [Route("get")]
-        public IActionResult Get(UserLoginDTO dto)
-        {
-            if (dto==null)
-            {
-                return BadRequest();
-            }
-            return Ok(_userService.Get(dto));
-        }
-
 
     }
 }

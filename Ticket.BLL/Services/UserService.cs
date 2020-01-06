@@ -19,13 +19,14 @@ namespace Ticket.BLL.Services
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<UserKey> _userKeyRepository;
-        private readonly  MailService mailService=new MailService();
-        public UserService(IUnitOfWork uow, IMapper mapper)
+        private readonly IMailService _mailService;
+        public UserService(IUnitOfWork uow, IMapper mapper, IMailService mailService)
         {
             _uow = uow;
             _mapper = mapper;
             _userRepository = _uow.GetRepository<User>();
             _userKeyRepository = _uow.GetRepository<UserKey>();
+            _mailService = mailService;
 
 
         }
@@ -80,7 +81,7 @@ namespace Ticket.BLL.Services
                     transaction.Commit();
 
 
-                    mailService.SendEmail(dto.Email, "Aktivasyon Linki", "<div>Hesabınızı aktif etmek için lütfen <a href='http://localhost:8080/activation?key=" + guidId + "' >http://localhost:8080/activation?key=" + guidId + "<a> linkine tıklayınız</div>");
+                    _mailService.SendEmail(dto.Email, "Aktivasyon Linki", "<div>Hesabınızı aktif etmek için lütfen <a href='http://localhost:8080/activation?key=" + guidId + "' >http://localhost:8080/activation?key=" + guidId + "<a> linkine tıklayınız</div>");
 
 
 

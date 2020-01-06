@@ -17,25 +17,7 @@ namespace Ticket.API
     {
         public static void Main(string[] args)
         {
-           var host = CreateWebHostBuilder(args).Build();
-
-            //Initialize db.
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    //var dbInitializer = services.GetRequiredService<ISeedDataService>();
-                    //dbInitializer.Initialize().GetAwaiter().GetResult();
-                }
-                catch (Exception e)
-                {
-
-                    var message = e;
-                }
-            }
-
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
 
            
         }

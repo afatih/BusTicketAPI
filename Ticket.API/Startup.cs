@@ -94,6 +94,7 @@ namespace Ticket.API
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITourService, TourService>();
+            services.AddScoped<IMailService, MailService>();
 
 
         }

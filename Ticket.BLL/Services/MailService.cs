@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Ticket.BLL.IServices;
 
 namespace Ticket.BLL.Services
 {
-    public class MailService
+    public class MailService:IMailService
     {
         public async Task SendEmail(string email, string subject, string htmlContent)
         {
