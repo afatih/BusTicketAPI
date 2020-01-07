@@ -29,13 +29,13 @@ namespace Ticket.BLL.Services
         }
         public IEnumerable<CityDto> GetCities()
         {
-            var cities = _cityRepository.Get(x => x.Id > 0);
+            var cities = _cityRepository.Get(x => x.Id > 0).OrderBy(x => x.RowNumber);
             return _mapper.Map<IEnumerable<CityDto>>(cities);
         }
 
         public IEnumerable<TourDto> GetTours(TourSelectDto dto)
         {
-            var tours = _tourRepository.Get(x => x.From == dto.From && x.To == dto.To && x.Date == dto.Date);
+            var tours = _tourRepository.Get(x => x.From == dto.From && x.To == dto.To && x.Date == dto.Date).OrderBy(x=>x.RowNumber);
             return _mapper.Map<IEnumerable<TourDto>>(tours);
         }
 
@@ -44,7 +44,7 @@ namespace Ticket.BLL.Services
             var tour = _tourRepository.Get(x => x.Id == id).SingleOrDefault();
             if (tour.UserCount >= 44)
             {
-                throw new AppException("Seçili seferde ki kişi sayısı dolmuştur");
+                throw new AppException("Seçili sefer için yolcu sayısı dolmuştur");
             }
             return _mapper.Map<TourDto>(tour);
         }
@@ -76,26 +76,7 @@ namespace Ticket.BLL.Services
                     throw new AppException(e.Message);
                 }
             }
-           
-           
-
-            //_userTourRepository.Add(_mapper.Map<UserTour>(dto));
-
-            //var result1 = _uow.Save();
-            //var result2 = 0;
-
-            //if (result1>0)
-            //{
-            //    var tour = _tourRepository.Get(x => x.Id == dto.TourId).SingleOrDefault();
-            //    tour.UserCount +=1 ;
-            //    _tourRepository.Update(tour);
-            //    result2 = _uow.Save();
-            //}
-
-            //if (result1 > 0 && result2 > 0)
-            //    return 1;
-            //else
-            //    return 0;
+          
 
         }
 
@@ -117,7 +98,7 @@ namespace Ticket.BLL.Services
                 userTour.UserTourId = item.Id;
                 tours.Add(userTour);
             }
-            return tours.AsEnumerable();
+            return tours.OrderBy(x => x.Date).AsEnumerable();
             
         }
 
@@ -152,28 +133,6 @@ namespace Ticket.BLL.Services
                     throw new AppException(ex.Message);
                 }
             }
-
-
-            //        _userTourRepository.HardDelete(x=>x.Id==id);
-            
-            //var result1 = _uow.Save();
-            //var result2 = 0;
-
-            //if (result1 != 0)
-            //{
-            //    var deletedTour = _tourRepository.Get(x => x.Id == tourId).SingleOrDefault();
-            //    if (deletedTour!=null)
-            //    {
-            //        deletedTour.UserCount -= 1;
-            //    }
-
-            //    result2 = _uow.Save();
-            //}
-
-            //if (result1 > 0 && result2 > 0)
-            //    return 1;
-            //else
-            //    return 0;
 
         }
     }

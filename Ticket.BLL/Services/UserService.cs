@@ -66,13 +66,14 @@ namespace Ticket.BLL.Services
             {
                 try
                 {
+                    //kişiyi ekle
                     var userEntitiy = _mapper.Map<User>(dto);
                     _userRepository.Add(userEntitiy);
                     _uow.Save();
 
 
                 
-
+                    //kişi için oluşturulan aktivasyon keyini başka tabloya ekle
                     string guidId = Guid.NewGuid().ToString();
                     var userKey = new UserKey() { Email = dto.Email, ActivationKey = guidId };
                     _userKeyRepository.Add(userKey);

@@ -15,21 +15,23 @@ using Ticket.Helpers;
 
 namespace Ticket.API.Controllers
 {
-    [Authorize]
+
     [ApiController]
     [Route("[controller]")]
     public class UserController : Controller
     {
-        IUserService _userService;
+        private readonly IUserService _userService;
         private readonly AppSettings _appSettings;
-        public UserController(IUserService userService, IOptions<AppSettings> appSettings)
+        private readonly ITokenService _tokenService;
+        public UserController(IUserService userService, IOptions<AppSettings> appSettings,ITokenService tokenService)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
+            _tokenService = tokenService;
         }
 
 
-        [AllowAnonymous]
+
         [HttpPost("authenticate")]
         public IActionResult Authenticate ([FromBody] UserDTO userDto)
         {
@@ -40,25 +42,7 @@ namespace Ticket.API.Controllers
             if (!user.IsActive)
                 return BadRequest(new { message = "Hesabınızı aktif etmek için lütfen email hesabınıza gönderilen aktivasyon linkine tıklayınız." });
 
-            
-
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name,user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-
-
+            var tokenString = _tokenService.GetToken(user.Id,_appSettings);
 
             // return basic user info (without password) and token to store client side
             return Ok(new
@@ -72,7 +56,6 @@ namespace Ticket.API.Controllers
             });
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserDTO userDto)
         {
@@ -90,7 +73,7 @@ namespace Ticket.API.Controllers
 
         }
 
-        [AllowAnonymous]
+
         [HttpPost("activation")]
         public IActionResult ActivateUser([FromBody] ActivationKeyRequest activation)
         {
@@ -107,22 +90,7 @@ namespace Ticket.API.Controllers
                     return NotFound(new { message= "Bu aktivasyon anahtarıyla kayıtlı bir kullanıcı bulunmamaktadır." } );
 
 
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                    new Claim(ClaimTypes.Name,user.Id.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
-
-
+                var tokenString = _tokenService.GetToken(user.Id, _appSettings);
 
 
                 // return basic user info (without password) and token to store client side
@@ -140,7 +108,8 @@ namespace Ticket.API.Controllers
             {
                 return BadRequest(ex.Message);
             }       
-        }   
+        }
+       
 
     }
 }

@@ -13,6 +13,7 @@ namespace Ticket.DTO
         public int Price { get; set; }
         public int UserCount { get; set; }
         public string Time { get; set; }
+        public int RowNumber { get; set; }
         public bool IsAvailable
         {
             get

@@ -15,7 +15,7 @@ namespace Ticket.API.Controllers
     [Route("[controller]")]
     public class TourController : Controller
     {
-        ITourService _tourService;
+        private readonly ITourService _tourService;
 
         public TourController(ITourService tourService)
         {

@@ -53,8 +53,7 @@ namespace Ticket.API
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-
-            // configure jwt authentication
+            #region configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -90,19 +89,21 @@ namespace Ticket.API
                     ValidateAudience = false
                 };
             });
+            #endregion
 
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITourService, TourService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,TicketDBContext context)
         {
-
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -122,12 +123,10 @@ namespace Ticket.API
 
             app.UseHttpsRedirection();
 
-            app.UseMvc(routes =>
-            {
-                routes
-                    .MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}")
-                    .MapRoute(name: "api", template: "api/{controller=User}/{action}/{id?}");
-            });
+            //seed dataların yüklendiği kısım
+            DbSeeder.SeedDb(context);
+
+            app.UseMvc();
         }
     }
 }
