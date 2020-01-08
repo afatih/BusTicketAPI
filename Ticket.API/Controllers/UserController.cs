@@ -67,7 +67,7 @@ namespace Ticket.API.Controllers
             }
             catch (Exception ex)
             {
-
+                var x = ex.Message;
                 return BadRequest(new { message = ex.Message });
             }
 

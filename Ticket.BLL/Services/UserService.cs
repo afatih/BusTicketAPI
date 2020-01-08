@@ -31,14 +31,14 @@ namespace Ticket.BLL.Services
 
         }
 
-        public  IEnumerable<UserDTO> Get()
+        public IEnumerable<UserDTO> Get()
         {
-            return  _mapper.Map<IEnumerable<UserDTO>>(_userRepository.Get(x => x.Id > 0));
+            return _mapper.Map<IEnumerable<UserDTO>>(_userRepository.Get(x => x.Id > 0));
         }
 
         public UserDTO Get(int id)
         {
-            var user = _userRepository.Get(x=>x.Id==id).SingleOrDefault();
+            var user = _userRepository.Get(x => x.Id == id).SingleOrDefault();
             var userDto = _mapper.Map<UserDTO>(user);
             return userDto;
         }
@@ -50,9 +50,9 @@ namespace Ticket.BLL.Services
                 throw new AppException("Password is required");
 
             var usersBySelectedEmail = _userRepository.Get(x => x.Email.ToLower() == dto.Email.ToLower()).ToList();
-            if (usersBySelectedEmail!=null)
+            if (usersBySelectedEmail != null)
             {
-                if (usersBySelectedEmail.Count>0)
+                if (usersBySelectedEmail.Count > 0)
                 {
                     if (!usersBySelectedEmail.FirstOrDefault().IsActive)
                     {
@@ -62,7 +62,7 @@ namespace Ticket.BLL.Services
                 }
             }
 
-            using(var transaction = _uow.BeginTransaction())
+            using (var transaction = _uow.BeginTransaction())
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace Ticket.BLL.Services
                     _uow.Save();
 
 
-                
+
                     //kişi için oluşturulan aktivasyon keyini başka tabloya ekle
                     string guidId = Guid.NewGuid().ToString();
                     var userKey = new UserKey() { Email = dto.Email, ActivationKey = guidId };
@@ -81,27 +81,16 @@ namespace Ticket.BLL.Services
 
                     transaction.Commit();
 
-
                     _mailService.SendEmail(dto.Email, "Aktivasyon Linki", "<div>Hesabınızı aktif etmek için lütfen <a href='http://localhost:8080/activation?key=" + guidId + "' >http://localhost:8080/activation?key=" + guidId + "<a> linkine tıklayınız</div>");
-
-
 
                 }
                 catch (Exception e)
                 {
                     transaction.Rollback();
                     throw new AppException("Kullanıcı kayıt olurken beklenmedik bir hata ile karşılaşıldı");
-                  
+
                 }
-               
-
             }
-
-          
-
-
-
-
             return dto;
         }
 
@@ -114,7 +103,7 @@ namespace Ticket.BLL.Services
 
         public UserDTO Authenticate(string email, string password)
         {
-            if (string.IsNullOrEmpty(email)||string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return null;
             var user = _userRepository.Get(x => x.Email == email && x.Password == password).SingleOrDefault();
 
@@ -135,13 +124,13 @@ namespace Ticket.BLL.Services
             if (user == null)
                 return null;
 
-            user.IsActive =true;
+            user.IsActive = true;
 
             _userRepository.Update(user);
             _uow.Save();
 
             return _mapper.Map<UserDTO>(user);
-        }   
+        }
 
 
 

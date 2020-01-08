@@ -36,7 +36,7 @@ namespace Ticket.BLL.Services
                 message.IsBodyHtml = true;
                 message.To.Add(new MailAddress(email));
 
-                var credential = new NetworkCredential("qr1903@gmail.com", "grhn43gurhan");
+                var credential = new NetworkCredential("fatihtest1903@gmail.com", "grhn43gurhan");
 
                 using (var emailClient = new SmtpClient())
                 {
